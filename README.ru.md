@@ -1,5 +1,8 @@
 # ProfileMirrorSync
 
+![ProfileMirrorSync - LOG](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Log.png "ProfileMirrorSync - LOG")
+
+
 [![build](https://github.com/commeta/ProfileMirrorSync/actions/workflows/build.yml/badge.svg)](https://github.com/commeta/ProfileMirrorSync/actions/workflows/build.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
