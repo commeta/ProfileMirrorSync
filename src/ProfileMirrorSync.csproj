@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AssemblyName>ProfileMirrorSync</AssemblyName>
+    <RootNamespace>ProfileMirrorSync</RootNamespace>
+    <ApplicationIcon Condition="Exists('Resources\app.ico')">Resources\app.ico</ApplicationIcon>
+    <Version>2.5.3</Version>
+    <AssemblyVersion>2.5.3.0</AssemblyVersion>
+    <FileVersion>2.5.3.0</FileVersion>
+    <Product>ProfileMirrorSync</Product>
+    <Company>ProfileMirrorSync</Company>
+    <Copyright>2026</Copyright>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <Optimize>true</Optimize>
+    <!-- manifest for UAC / DPI awareness -->
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\app.ico" />
+    <EmbeddedResource Include="Resources\app.ico" Condition="Exists('Resources\app.ico')" />
+  </ItemGroup>
+
+  <!-- v2.5.0: System.Text.Encoding.CodePages dependency removed together with
+       the security-monitoring subsystem (it was only needed to decode legacy
+       OEM codepages from PowerShell/net.exe output). -->
+
+  <!-- expose internal members to the test project. -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="ProfileMirrorSync.Tests" />
+  </ItemGroup>
+</Project>
