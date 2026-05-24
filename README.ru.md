@@ -2,7 +2,6 @@
 
 ![ProfileMirrorSync - LOG](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Log.png "ProfileMirrorSync - LOG")
 
-
 [![build](https://github.com/commeta/ProfileMirrorSync/actions/workflows/build.yml/badge.svg)](https://github.com/commeta/ProfileMirrorSync/actions/workflows/build.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
@@ -81,6 +80,9 @@ dotnet publish src/ProfileMirrorSync.csproj -c Release -r win-x64 --self-contain
 месте, если не удалить их явно.
 
 ## Запуск
+
+![ProfileMirrorSync - Settings-Main](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Settings-Main.png "ProfileMirrorSync - Settings-Main")
+
 
 Запустите `ProfileMirrorSync.exe` — он стартует свёрнутым в трей. Правый клик по
 значку → **Параметры…**, укажите сетевую папку и параметры, затем
