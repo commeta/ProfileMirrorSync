@@ -18,20 +18,23 @@ jobs:
         with:
           dotnet-version: '9.0.x'
 
-      - name: Restore
+      - name: Restore source
         run: dotnet restore src/ProfileMirrorSync.csproj
+
+      - name: Restore tests
+        run: dotnet restore tests/ProfileMirrorSync.Tests.csproj
 
       - name: Build (Release)
         run: dotnet build src/ProfileMirrorSync.csproj -c Release --no-restore
 
       - name: Test
-        run: dotnet test tests/ProfileMirrorSync.Tests.csproj -c Release
+        run: dotnet test tests/ProfileMirrorSync.Tests.csproj -c Release --no-restore
 
       - name: Publish
-        run: dotnet publish src/ProfileMirrorSync.csproj -c Release -r win-x64 --self-contained true -o publish
+        run: dotnet publish src/ProfileMirrorSync.csproj -c Release -r win-x64 --self-contained false -o publish
 
       - name: Upload publish folder
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ProfileMirrorSync-win-x64
           path: publish/
