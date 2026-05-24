@@ -81,7 +81,7 @@ dotnet publish src/ProfileMirrorSync.csproj -c Release -r win-x64 --self-contain
 
 ## Запуск
 
-![ProfileMirrorSync - Settings-Main](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Settings-Main.png "ProfileMirrorSync - Settings-Main")
+![ProfileMirrorSync - Stat](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Stat.png "ProfileMirrorSync - Stat")
 
 
 Запустите `ProfileMirrorSync.exe` — он стартует свёрнутым в трей. Правый клик по
@@ -132,6 +132,8 @@ FileSystemWatcher ──дебаунс──> очередь ──> копир 
 файлами/пакетами, ёмкость очереди, триггеры по событиям (сон/разблокировка/
 вход), возобновление больших файлов, защита от удаления при пустом источнике и
 пресеты архиватора.
+
+![ProfileMirrorSync - Settings-Main](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Settings-Main.png "ProfileMirrorSync - Settings-Main")
 
 ## Участие в разработке
 
