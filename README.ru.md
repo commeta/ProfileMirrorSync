@@ -135,6 +135,17 @@ FileSystemWatcher ──дебаунс──> очередь ──> копир 
 
 ![ProfileMirrorSync - Settings-Main](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Settings-Main.png "ProfileMirrorSync - Settings-Main")
 
+![ProfileMirrorSync - Settings-Dirs](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Settings-Dirs.png "ProfileMirrorSync - Settings-Dirs")
+
+![ProfileMirrorSync - Settings-Additional](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Settings-Additional.png "ProfileMirrorSync - Settings-Additional")
+
+![ProfileMirrorSync - Settings-Efficiency](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Settings-Efficiency.png "ProfileMirrorSync - Settings-Efficiency")
+
+![ProfileMirrorSync - Settings-Archive-Backup](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Settings-Archive-Backup.png "ProfileMirrorSync - Settings-Archive-Backup")
+
+![ProfileMirrorSync - Settings-Stat](https://raw.githubusercontent.com/commeta/ProfileMirrorSync/refs/heads/main/docs/img/Settings-Stat.png "ProfileMirrorSync - Settings-Stat")
+
+
 ## Участие в разработке
 
 Issues и pull requests приветствуются. Делайте небольшие сфокусированные
