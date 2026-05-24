@@ -33,7 +33,7 @@ if exist tests\ProfileMirrorSync.Tests.csproj (
 )
 
 echo [4/4] Publishing single-file win-x64...
-dotnet publish src\ProfileMirrorSync.csproj -c Release -r win-x64 --self-contained true -o publish\
+dotnet publish src\ProfileMirrorSync.csproj -c Release -r win-x64 --self-contained false -o publish\
 if %ERRORLEVEL% neq 0 goto :error
 
 echo.
