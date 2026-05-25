@@ -33,8 +33,26 @@ jobs:
       - name: Publish
         run: dotnet publish src/ProfileMirrorSync.csproj -c Release -r win-x64 --self-contained false -o publish
 
-      - name: Upload publish folder
+      - name: Prepare release folder
+        if: github.event_name == 'push'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path release | Out-Null
+          Copy-Item -Path publish\* -Destination release\ -Recurse -Force
+          Copy-Item -Path install.bat -Destination release\ -Force
+          if (Test-Path uninstall.bat) { Copy-Item -Path uninstall.bat -Destination release\ -Force }
+          if (Test-Path README.md) { Copy-Item -Path README.md -Destination release\ -Force }
+          if (Test-Path LICENSE) { Copy-Item -Path LICENSE -Destination release\ -Force }
+
+      - name: Create release zip
+        if: github.event_name == 'push'
+        shell: pwsh
+        run: |
+          Compress-Archive -Path release\* -DestinationPath ProfileMirrorSync-win-x64.zip -Force
+
+      - name: Upload release zip
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v6
         with:
           name: ProfileMirrorSync-win-x64
-          path: publish/
+          path: ProfileMirrorSync-win-x64.zip
