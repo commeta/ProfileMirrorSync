@@ -11,10 +11,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup .NET 9
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '9.0.x'
 
@@ -34,7 +34,7 @@ jobs:
         run: dotnet publish src/ProfileMirrorSync.csproj -c Release -r win-x64 --self-contained false -o publish
 
       - name: Upload publish folder
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: ProfileMirrorSync-win-x64
           path: publish/
