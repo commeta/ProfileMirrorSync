@@ -38,7 +38,7 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path release | Out-Null
-          Copy-Item -Path publish\* -Destination release\ -Recurse -Force
+          Copy-Item -Path publish -Destination release\publish -Recurse -Force
           Copy-Item -Path install.bat -Destination release\ -Force
           if (Test-Path uninstall.bat) { Copy-Item -Path uninstall.bat -Destination release\ -Force }
           if (Test-Path README.md) { Copy-Item -Path README.md -Destination release\ -Force }
