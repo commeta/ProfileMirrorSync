@@ -44,12 +44,6 @@ jobs:
           if (Test-Path README.md) { Copy-Item -Path README.md -Destination release\ -Force }
           if (Test-Path LICENSE) { Copy-Item -Path LICENSE -Destination release\ -Force }
 
-      - name: Create release zip
-        if: github.event_name == 'push'
-        shell: pwsh
-        run: |
-          Compress-Archive -Path release\* -DestinationPath ProfileMirrorSync-win-x64.zip -Force
-
       - name: Upload release zip
         if: github.event_name == 'push'
         uses: actions/upload-artifact@v6
