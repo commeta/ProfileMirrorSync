@@ -67,7 +67,7 @@
 flowchart TB
     subgraph UI["🖥  UI Layer  (UI/)"]
         direction LR
-        TrayApp["TrayApp\n(ApplicationContext)"]
+        TrayApp["TrayApp<br>(ApplicationContext)"]
         SettingsForm["SettingsForm"]
         StatsForm["StatsForm"]
         LogViewerForm["LogViewerForm"]
@@ -75,47 +75,47 @@ flowchart TB
 
     subgraph Orchestration["⚙  Orchestration  (Services/)"]
         direction TB
-        SC["SyncController\n[lifecycle · queue · FSW · dispatch]"]
+        SC["SyncController<br>[lifecycle · queue · FSW · dispatch]"]
     end
 
     subgraph RealTime["⚡  Real-time pipeline"]
         direction LR
-        FSW["FileSystemWatcher\n×N корневых папок"]
-        DEB["Debounce\n(Task.Delay + CTS)"]
-        DEDUP["ConcurrentDictionary\n dedupe set"]
-        CH["BoundedChannel\n&#60;SyncOperation&#62;\n(back-pressure)"]
-        WORKER["Queue worker\nProcessQueueAsync()"]
+        FSW["FileSystemWatcher<br>×N корневых папок"]
+        DEB["Debounce<br>(Task.Delay + CTS)"]
+        DEDUP["ConcurrentDictionary<br> dedupe set"]
+        CH["BoundedChannel<br>&#60;SyncOperation&#62;<br>(back-pressure)"]
+        WORKER["Queue worker<br>ProcessQueueAsync()"]
     end
 
     subgraph BackgroundLoops["🔄  Background loops  (Tasks)"]
         direction LR
-        RECON["ReconcileLoopAsync\n(60 s poll)"]
-        POSTSYNC["PostSyncLoopAsync\n(independent timer)"]
-        LOGMIRROR["LogMirrorService\n(1×/day)"]
-        REGSNAPSHOT["RegistrySnapshotService\n(configurable interval)"]
+        RECON["ReconcileLoopAsync<br>(60 s poll)"]
+        POSTSYNC["PostSyncLoopAsync<br>(independent timer)"]
+        LOGMIRROR["LogMirrorService<br>(1×/day)"]
+        REGSNAPSHOT["RegistrySnapshotService<br>(configurable interval)"]
     end
 
     subgraph CoreServices["🔧  Core services"]
         direction LR
-        FM["FileMirror\n(3-pass reconcile)"]
-        TFC["ThrottledFileCopier\n(async chunk + resume)"]
-        BRL["ByteRateLimiter\n(token-bucket)"]
+        FM["FileMirror<br>(3-pass reconcile)"]
+        TFC["ThrottledFileCopier<br>(async chunk + resume)"]
+        BRL["ByteRateLimiter<br>(token-bucket)"]
         TURBO["TurboModeController"]
-        RSCHED["ReconcileScheduler\n(jitter + early trigger)"]
+        RSCHED["ReconcileScheduler<br>(jitter + early trigger)"]
     end
 
     subgraph State["💾  State & persistence"]
         direction LR
-        SS["SettingsStore\n(settings.json)"]
-        PSS["PersistentStateStore\n(monitor_state.json)"]
-        RSS["ResumeStateStore\n(resume/*.json)"]
-        LOG["Logger\n(daily rolling)"]
+        SS["SettingsStore<br>(settings.json)"]
+        PSS["PersistentStateStore<br>(monitor_state.json)"]
+        RSS["ResumeStateStore<br>(resume/*.json)"]
+        LOG["Logger<br>(daily rolling)"]
     end
 
     subgraph FileSystem["📁  File system"]
         direction LR
-        SRC["Source folders\n%USERPROFILE%\\…"]
-        DST["Network share\n\\\\server\\share\\\nMachine\\User\\"]
+        SRC["Source folders<br>%USERPROFILE%\\…"]
+        DST["Network share<br>\\\\server\\share\\<br>Machine\\User\\"]
     end
 
     TrayApp -->|"owns"| SC
@@ -200,7 +200,7 @@ graph LR
 
     subgraph "Models/"
         AS[AppSettings]
-        SM[StateModels\nPersistentState\nResumeState]
+        SM[StateModels<br>PersistentState<br>ResumeState]
     end
 
     TA --> SC
@@ -660,17 +660,17 @@ sequenceDiagram
 stateDiagram-v2
     [*] --> Stopped : ctor()
 
-    Stopped --> Starting : StartAsync()\nInterlocked.CAS(0→1)\n_lifecycleLock.Wait()
+    Stopped --> Starting : StartAsync()<br>Interlocked.CAS(0→1)<br>_lifecycleLock.Wait()
 
-    Starting --> Running : StartAsyncCore() OK\nVolatile.Write(state=2)
-    Starting --> Stopped : StartAsyncCore() throw\n(transactional rollback:\nwatchers disposed,\nCTS cancelled)
+    Starting --> Running : StartAsyncCore() OK<br>Volatile.Write(state=2)
+    Starting --> Stopped : StartAsyncCore() throw<br>(transactional rollback:<br>watchers disposed,<br>CTS cancelled)
 
-    Running --> Stopping : StopAsync()\nInterlocked.Write(state=3)\n_lifecycleLock.Wait()
-    Starting --> Stopping : StopAsync() во время старта\n(редкий кейс)
+    Running --> Stopping : StopAsync()<br>Interlocked.Write(state=3)<br>_lifecycleLock.Wait()
+    Starting --> Stopping : StopAsync() во время старта<br>(редкий кейс)
 
-    Stopping --> Stopped : StopAsyncCore() done\nVolatile.Write(state=0)
+    Stopping --> Stopped : StopAsyncCore() done<br>Volatile.Write(state=0)
 
-    Running --> Running : TriggerResumeReconcile()\n(сон/пробуждение)
+    Running --> Running : TriggerResumeReconcile()<br>(сон/пробуждение)
     Running --> Running : FSW events → queue
     Running --> Running : ReconcileLoopAsync poll
 
@@ -894,37 +894,37 @@ C4Context
 ```mermaid
 flowchart TD
     A([CopyAsync]) --> B{PublishMode?}
-    B -- TempThenRename --> C[Копировать в .pms_tmp\nallowResume=false]
-    C --> D{TryPublishRename\ndelete+rename}
+    B -- TempThenRename --> C[Копировать в .pms_tmp<br>allowResume=false]
+    C --> D{TryPublishRename<br>delete+rename}
     D -- OK --> E([Done])
-    D -- NotSupported --> F[Warn, Delete .pms_tmp\nFallback → DirectWrite]
+    D -- NotSupported --> F[Warn, Delete .pms_tmp<br>Fallback → DirectWrite]
     F --> G
     B -- DirectWrite --> G[ClearReadOnly dst]
-    G --> H[CopyWithRetryAsync\nallowResume=true]
+    G --> H[CopyWithRetryAsync<br>allowResume=true]
 
     H --> I[CopyOnceAsync]
     I --> J[ArrayPool.Rent 64KB]
-    J --> K{ResumeEnabled\n& size ≥ threshold?}
-    K -- YES --> L[ComputeHeadHash\nSHA-256 первых 4KB]
+    J --> K{ResumeEnabled<br>& size ≥ threshold?}
+    K -- YES --> L[ComputeHeadHash<br>SHA-256 первых 4KB]
     L --> M[ResumeStateStore.TryLoad]
     M --> N{sidecar match?}
-    N -- strictMatch\norstrictGrowMatch --> O[startOffset = sidecar.BytesCopied\nSetLength dst если dst > sidecar]
-    N -- NO match --> P[startOffset = 0\nsidecar.Clear]
+    N -- strictMatch<br>orstrictGrowMatch --> O[startOffset = sidecar.BytesCopied<br>SetLength dst если dst > sidecar]
+    N -- NO match --> P[startOffset = 0<br>sidecar.Clear]
     K -- NO --> P
 
     O --> Q
-    P --> Q[Open src FileStream\nOpen dst FileStream\nstartOffset]
+    P --> Q[Open src FileStream<br>Open dst FileStream<br>startOffset]
 
     Q --> R{chunk loop}
-    R --> S[Read src chunk\n≤ limiter.MaxBurstBytes]
-    S --> T[ByteRateLimiter.WaitAsync\nbytes=chunkSize]
-    T --> U[WriteAsync dst\nFlushAsync]
+    R --> S[Read src chunk<br>≤ limiter.MaxBurstBytes]
+    S --> T[ByteRateLimiter.WaitAsync<br>bytes=chunkSize]
+    T --> U[WriteAsync dst<br>FlushAsync]
     U --> V{every ~1MB?}
-    V -- YES --> W[ResumeStateStore.Save\nemitTrace=каждые 10MB]
+    V -- YES --> W[ResumeStateStore.Save<br>emitTrace=каждые 10MB]
     W --> R
     V -- NO --> R
     R -- EOF --> X[ArrayPool.Return]
-    X --> Y[SetCreationTimeUtc\nSetLastWriteTimeUtc]
+    X --> Y[SetCreationTimeUtc<br>SetLastWriteTimeUtc]
     Y --> Z[ResumeStateStore.Clear]
     Z --> E
 ```
@@ -1009,11 +1009,11 @@ ReconcileSummary {
 flowchart LR
     subgraph "ReconcileScheduler.Evaluate(state, now)"
         A[anchor = LastReconcileUtc ?? now]
-        B["NextDue = anchor\n+ BaseIntervalMin\n+ currentJitterOffsetSec"]
+        B["NextDue = anchor<br>+ BaseIntervalMin<br>+ currentJitterOffsetSec"]
         C{now >= NextDue?}
-        D{EarlyReconcileRequested\n&& IsEarlyTriggerAllowed?}
-        E[IsDue=true\nDueByTime=true]
-        F[IsDue=true\nDueByEarly=true]
+        D{EarlyReconcileRequested<br>&& IsEarlyTriggerAllowed?}
+        E[IsDue=true<br>DueByTime=true]
+        F[IsDue=true<br>DueByEarly=true]
         G[IsDue=false]
     end
     A --> B --> C
@@ -1118,17 +1118,17 @@ IsEarlyTriggerAllowed:
 ```mermaid
 flowchart TD
     subgraph "Transient errors"
-        E1["IOException\n(сеть, AV-лок)"]
+        E1["IOException<br>(сеть, AV-лок)"]
         E2["SocketException"]
         E3["UnauthorizedAccessException"]
     end
 
     subgraph "Recovery mechanisms"
-        R1["RetryAsync\n3 попытки, backoff 1/2/4s"]
-        R2["Reconcile\n(поймает пропущенное)"]
-        R3["SafeEnumerateFiles\nskip on exception"]
-        R4["Loop restart\n30–60s backoff"]
-        R5["Drop + log\n(30s dedup)"]
+        R1["RetryAsync<br>3 попытки, backoff 1/2/4s"]
+        R2["Reconcile<br>(поймает пропущенное)"]
+        R3["SafeEnumerateFiles<br>skip on exception"]
+        R4["Loop restart<br>30–60s backoff"]
+        R5["Drop + log<br>(30s dedup)"]
     end
 
     E1 --> R1 --> |"max retries"| R2
@@ -1141,10 +1141,10 @@ flowchart TD
     EF --> |"Delete/Rename"| R1
 
     subgraph "Worker crash"
-        WC[ProcessQueueAsync\nReconcileLoopAsync\nPostSyncLoopAsync]
+        WC[ProcessQueueAsync<br>ReconcileLoopAsync<br>PostSyncLoopAsync]
     end
     WC --> R4
-    Note1["Outer try/catch\nlog Error\ncheck state==Running\nTask.Run(self)"]
+    Note1["Outer try/catch<br>log Error<br>check state==Running<br>Task.Run(self)"]
 ```
 
 ### Защита от пустого источника (DeletionSafetyGuard)
