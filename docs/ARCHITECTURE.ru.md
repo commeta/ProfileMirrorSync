@@ -723,12 +723,12 @@ C4Context
     title Deployment — ProfileMirrorSync v2.5.3
 
     Enterprise_Boundary(corp, "Корпоративная инфраструктура") {
-        System_Ext(smb, "SMB File Server", "Windows Server / NAS\n\\\\server\\share")
+        System_Ext(smb, "SMB File Server", "Windows Server / NAS<br>\\\\server\\share")
     }
 
     Enterprise_Boundary(pc, "Рабочий ПК — Windows 10/11 x64") {
         Container_Boundary(user_session, "Пользовательская сессия (Local\\)") {
-            Component(exe, "ProfileMirrorSync.exe", ".NET 9 WinExe\nSelf-contained=false\nPublishSingleFile=true", "Системный трей")
+            Component(exe, "ProfileMirrorSync.exe", ".NET 9 WinExe<br>Self-contained=false<br>PublishSingleFile=true", "Системный трей")
             Component(settings, "settings.json", "JSON", "%LocalAppData%\\ProfileMirrorSync\\")
             Component(state, "monitor_state.json", "JSON", "%LocalAppData%\\ProfileMirrorSync\\")
             Component(resume, "resume\\*.json", "JSON sidecars", "%LocalAppData%\\ProfileMirrorSync\\resume\\")
