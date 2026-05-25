@@ -123,7 +123,7 @@ FileSystemWatcher ──дебаунс──> очередь ──> копир 
   WinRAR, ZIP, Robocopy, удаление старых) по своему расписанию — для серверной
   истории версий.
 
-Полное описание архитектуры: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Полное описание архитектуры: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.ru.md).
 
 ## Настройка
 
